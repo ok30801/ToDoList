@@ -4,7 +4,7 @@ let input = document.querySelector('#input-task'),
     wrapApp = document.querySelector('.container'),
     taskList = document.querySelector('#task-list');
 
-// Отмена контекстного меню при клике правой кл. мыши
+// Отмена контекстного меню
 
 wrapApp. addEventListener('contextmenu', (e) => {
     e.preventDefault();
@@ -19,7 +19,7 @@ if (localStorage.getItem('tasks')) {
     showTasks();
 }
 
-// Добавление новой задачи в массив tasksArr
+// Добавление новой задачи
 
 button.addEventListener('click', () => {
 
@@ -28,18 +28,17 @@ button.addEventListener('click', () => {
         checked: false,
     }
     if(input.value == '') {
-        /*alertMessage.style.display = 'block'
-        alertMessage.className = 'alert-message-show'*/
         alert('Добавьте описание!!!');
     }else{
         tasksArr.push(newTask);
-        alertMessage.style.display = 'none'
+        alertMessage.style.display = 'none';
         input.value = '';
     }
     showTasks();
 
-    // Save записанных задач в массив tasksArr
-    localStorage.setItem('tasks', JSON.stringify(tasksArr)); // 'tasks' - произвольное имя
+    // Save задач в localStorage
+
+    localStorage.setItem('tasks', JSON.stringify(tasksArr));
     location.reload();
 });
 
@@ -53,8 +52,8 @@ function showTasks() {
             <li class="check-list">
                 <div class="wrapper">
                     <div class="check-wrap">
-                            <input type='checkbox' id='item_${index}' ${item.checked ? 'checked' : ''}>
-                            <label id="check" for='item_${index}'>${item.taskList}</label>
+                        <input type='checkbox' id='item_${index}' ${item.checked ? 'checked' : ''}>
+                        <label id="check" for='item_${index}'>${item.taskList}</label>
                     </div>
                     <div class="input-edit">
                         <input type="text" id="edit_${index}" class="edit" maxlength="47">
@@ -67,11 +66,11 @@ function showTasks() {
                 </div>
             </li>
         `;
-        taskList.innerHTML = showTasks
+        taskList.innerHTML = showTasks;
     });
 }
 
-// Save отметок (галочек) в localStorage
+// Save отметок в localStorage
 
 taskList.addEventListener('change', (e) => {
     let idInput = e.target.getAttribute('id');
@@ -86,7 +85,7 @@ taskList.addEventListener('change', (e) => {
     });
 });
 
-// Удаление задач из общего списка
+// Удаление
 
 let close = document.querySelectorAll('.fa-trash-o');
 
@@ -94,7 +93,7 @@ close.forEach((item, i) => {
 
     item.addEventListener('click', (e) => {
         if(e.target === item) {
-            tasksArr.splice(i, 1)
+            tasksArr.splice(i, 1);
         }
         location.reload();
         localStorage.setItem('tasks', JSON.stringify(tasksArr));
@@ -102,7 +101,7 @@ close.forEach((item, i) => {
     });
 });
 
-// Редактирование задачи
+// Редактирование
 
 let editButton = document.querySelectorAll('.icon-edit'),
     editInput = document.querySelectorAll('.edit'),
@@ -110,15 +109,13 @@ let editButton = document.querySelectorAll('.icon-edit'),
 
 editButton.forEach((item, i) => {
 
-    item.addEventListener('click', (e) => {
+    item.addEventListener('click', () => {
         editInput.forEach((item, i) => {
             editInput[i].value = JSON.parse(JSON.stringify(tasksArr[i].taskList));
         });
-        /*if(e.currentTarget === item) {*/
             editInput.item(i).style.display = 'block';
             editButton.item(i).style.display = 'none';
             saveButton.item(i).style.display = 'block';
-        /*}*/
     });
 });
 
@@ -140,7 +137,7 @@ function editButtonShow() {
 
 document.body.addEventListener('keydown', (e) => {
     if(e.keyCode === 27){
-        editButtonShow()
+        editButtonShow();
     }
 });
 
@@ -157,7 +154,7 @@ saveButton.forEach((item, i) => {
     });
 });
 
-// Рабочий код удаления по ctrl + right button mouse
+// Удаления по ctrl + right button mouse
 
 /*taskList.addEventListener('contextmenu', (e) => {
     e.preventDefault();
@@ -166,10 +163,10 @@ saveButton.forEach((item, i) => {
 
         if(item.taskList === e.target.innerHTML) {
             if(e.ctrlKey) {
-                tasksArr.splice(i, 1)
+                tasksArr.splice(i, 1);
             }
         }
-        showTasks()
+        showTasks();
         localStorage.setItem('tasks', JSON.stringify(tasksArr));
     });
 });*/
